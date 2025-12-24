@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/glados28/go-clickhouse/ch"
-	"github.com/glados28/go-clickhouse/chdebug"
+	"github.com/uptrace/go-clickhouse/chdebug"
 )
 
 type Model struct {

@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/glados28/go-clickhouse/ch"
-	"github.com/glados28/go-clickhouse/chdebug"
+	"github.com/uptrace/go-clickhouse/chdebug"
 	"github.com/glados28/go-clickhouse/chmigrate"
 	"github.com/glados28/go-clickhouse/example/migrations/migrations"
 
