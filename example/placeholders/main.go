@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/uptrace/go-clickhouse/ch"
-	"github.com/uptrace/go-clickhouse/chdebug"
+	"github.com/glados28/go-clickhouse/ch"
+	"github.com/glados28/go-clickhouse/chdebug"
 )
 
 type User struct {

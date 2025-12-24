@@ -3,7 +3,7 @@ package chschema
 import (
 	"reflect"
 
-	"github.com/uptrace/go-clickhouse/ch/chproto"
+	"github.com/glados28/go-clickhouse/ch/chproto"
 )
 
 type NullableColumn struct {
@@ -45,12 +45,36 @@ func (c *NullableColumn) Set(v any) {
 }
 
 func (c *NullableColumn) AppendValue(v reflect.Value) {
-	if v.IsNil() {
-		c.Nulls.Column = append(c.Nulls.Column, 1)
-		c.Values.AppendValue(reflect.New(c.Values.Type()).Elem())
+	// Handle pointer types (*time.Time, etc.)
+	if v.Kind() == reflect.Ptr {
+		if v.IsNil() {
+			c.Nulls.Column = append(c.Nulls.Column, 1)
+			c.Values.AppendValue(reflect.New(c.Values.Type()).Elem())
+		} else {
+			c.Nulls.Column = append(c.Nulls.Column, 0)
+			// Extract the value from the pointer
+			elemValue := v.Elem()
+			// Create a new addressable value from the interface to ensure
+			// it works correctly with ColumnOf[T].AppendValue which calls Interface()
+			// This is necessary for struct types like time.Time when extracted from pointers
+			// that may not be addressable (e.g., from struct fields)
+			newValue := reflect.New(elemValue.Type()).Elem()
+			newValue.Set(elemValue)
+			c.Values.AppendValue(newValue)
+		}
 	} else {
-		c.Nulls.Column = append(c.Nulls.Column, 0)
-		c.Values.AppendValue(v.Elem())
+		// Handle non-pointer types (time.Time explicitly mapped to Nullable(DateTime))
+		// Check if the value is the zero value, which should be treated as null
+		if v.IsZero() {
+			c.Nulls.Column = append(c.Nulls.Column, 1)
+			c.Values.AppendValue(reflect.New(c.Values.Type()).Elem())
+		} else {
+			c.Nulls.Column = append(c.Nulls.Column, 0)
+			// Create a new addressable value to ensure it works correctly
+			newValue := reflect.New(v.Type()).Elem()
+			newValue.Set(v)
+			c.Values.AppendValue(newValue)
+		}
 	}
 }
 

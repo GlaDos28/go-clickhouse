@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/uptrace/go-clickhouse/ch"
+	"github.com/glados28/go-clickhouse/ch"
 )
 
 type Option func(*QueryHook)

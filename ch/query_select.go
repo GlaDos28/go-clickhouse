@@ -8,8 +8,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/uptrace/go-clickhouse/ch/chschema"
-	"github.com/uptrace/go-clickhouse/ch/internal"
+	"github.com/glados28/go-clickhouse/ch/chschema"
+	"github.com/glados28/go-clickhouse/ch/internal"
 )
 
 type SelectQuery struct {

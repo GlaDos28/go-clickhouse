@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/uptrace/go-clickhouse/ch"
+	"github.com/glados28/go-clickhouse/ch"
 )
 
 func init() {

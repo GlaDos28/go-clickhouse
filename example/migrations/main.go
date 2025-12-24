@@ -6,10 +6,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/uptrace/go-clickhouse/ch"
-	"github.com/uptrace/go-clickhouse/chdebug"
-	"github.com/uptrace/go-clickhouse/chmigrate"
-	"github.com/uptrace/go-clickhouse/example/migrations/migrations"
+	"github.com/glados28/go-clickhouse/ch"
+	"github.com/glados28/go-clickhouse/chdebug"
+	"github.com/glados28/go-clickhouse/chmigrate"
+	"github.com/glados28/go-clickhouse/example/migrations/migrations"
 
 	"github.com/urfave/cli/v2"
 )

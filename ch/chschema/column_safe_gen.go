@@ -3,7 +3,7 @@
 package chschema
 
 import (
-	"github.com/uptrace/go-clickhouse/ch/chproto"
+	"github.com/glados28/go-clickhouse/ch/chproto"
 )
 
 func (c *Int8Column) ReadFrom(rd *chproto.Reader, numRow int) error {

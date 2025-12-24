@@ -14,8 +14,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/uptrace/go-clickhouse/ch"
-	"github.com/uptrace/go-clickhouse/chdebug"
+	"github.com/glados28/go-clickhouse/ch"
+	"github.com/glados28/go-clickhouse/chdebug"
 )
 
 func chDB(opts ...ch.Option) *ch.DB {
@@ -149,6 +149,43 @@ func TestNullable(t *testing.T) {
 		{"name": "", "created_at": time.Unix(1e6+1, 0)},
 		{"name": nil, "created_at": time.Unix(1e6+2, 0)},
 	}, ms)
+}
+
+func TestNullableTime(t *testing.T) {
+	ctx := context.Background()
+
+	db := chDB()
+	defer db.Close()
+
+	type Model struct {
+		ID        int        `ch:",pk"`
+		CreatedAt *time.Time
+	}
+
+	err := db.ResetModel(ctx, (*Model)(nil))
+	require.NoError(t, err)
+
+	now := time.Unix(1e6, 0).UTC()
+	models := []Model{
+		{ID: 1, CreatedAt: &now},
+		{ID: 2, CreatedAt: nil},
+		{ID: 3, CreatedAt: &now},
+	}
+	_, err = db.NewInsert().Model(&models).Exec(ctx)
+	require.NoError(t, err)
+
+	var models2 []Model
+	err = db.NewSelect().Model(&models2).OrderExpr("id").Scan(ctx)
+	require.NoError(t, err)
+	require.Len(t, models2, 3)
+	require.Equal(t, models[0].ID, models2[0].ID)
+	require.NotNil(t, models2[0].CreatedAt)
+	require.Equal(t, models[0].CreatedAt.UTC(), models2[0].CreatedAt.UTC())
+	require.Equal(t, models[1].ID, models2[1].ID)
+	require.Nil(t, models2[1].CreatedAt)
+	require.Equal(t, models[2].ID, models2[2].ID)
+	require.NotNil(t, models2[2].CreatedAt)
+	require.Equal(t, models[2].CreatedAt.UTC(), models2[2].CreatedAt.UTC())
 }
 
 func TestPlaceholder(t *testing.T) {

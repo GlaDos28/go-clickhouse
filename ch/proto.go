@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/uptrace/go-clickhouse/ch/chpool"
-	"github.com/uptrace/go-clickhouse/ch/chproto"
-	"github.com/uptrace/go-clickhouse/ch/chschema"
+	"github.com/glados28/go-clickhouse/ch/chpool"
+	"github.com/glados28/go-clickhouse/ch/chproto"
+	"github.com/glados28/go-clickhouse/ch/chschema"
 	"go.opentelemetry.io/otel/trace"
 )
 

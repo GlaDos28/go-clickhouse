@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/uptrace/go-clickhouse/ch/internal"
+	"github.com/glados28/go-clickhouse/ch/internal"
 )
 
 var (
