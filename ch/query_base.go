@@ -330,6 +330,7 @@ func (q *baseQuery) getFields() ([]*chschema.Field, error) {
 		if q.table == nil {
 			return nil, nil
 		}
+
 		return q.table.Fields, nil
 	}
 

@@ -252,7 +252,8 @@ func chType(typ reflect.Type) string {
 	kind := typ.Kind()
 	switch kind {
 	case reflect.Ptr:
-		if typ.Elem().Kind() == reflect.Struct {
+		// Dirty, but whatever
+		if typ.Elem().Kind() == reflect.Struct && typ.Elem().String() != "time.Time" {
 			return chtype.String
 		}
 		return fmt.Sprintf("Nullable(%s)", chType(typ.Elem()))

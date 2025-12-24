@@ -2,6 +2,7 @@ package ch
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 
 	"github.com/glados28/go-clickhouse/ch/chschema"
@@ -112,6 +113,7 @@ func (m *structTableModel) Block(fields []*chschema.Field) *chschema.Block {
 		if m.table.IsColumnar() {
 			col.Set(fieldValue.Interface())
 		} else {
+			fmt.Printf("XXX 8: %s -> %+v | %s | %s\n", col.Name, fieldValue, fieldValue.Type(), field.CHType) // TODO: remove
 			col.AppendValue(fieldValue)
 		}
 	}
